@@ -42,13 +42,12 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     override fun onSensorChanged(p0: SensorEvent?) {
         val alpha = 0.97f
         synchronized(this) {
-            if(p0?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
+            val sensorType = p0?.sensor?.type ?: return
+            if(sensorType == Sensor.TYPE_ACCELEROMETER) {
                 for(i in 0..2) {
                     gravity[i] = alpha*gravity[i] + (1-alpha)*p0.values[i]
                 }
-            }
-
-            if(p0?.sensor?.type == Sensor.TYPE_MAGNETIC_FIELD) {
+            } else if(sensorType == Sensor.TYPE_MAGNETIC_FIELD) {
                 for(i in 0..2) {
                     geomagnetic[i] = alpha*geomagnetic[i] + (1-alpha)*p0.values[i]
                 }
@@ -66,7 +65,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
                 val anim = RotateAnimation(-currentAzimuth, -azimuth, Animation.RELATIVE_TO_SELF, 0.5f,
                         Animation.RELATIVE_TO_SELF, 0.5f)
-                anim.duration = 500
+                anim.duration = 500L
                 anim.fillAfter = true
                 imageView.value.startAnimation(anim)
 
