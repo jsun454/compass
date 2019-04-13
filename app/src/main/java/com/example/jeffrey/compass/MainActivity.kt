@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     }
 
     override fun onSensorChanged(p0: SensorEvent?) {
-        val alpha = 0.9f
+        val alpha = 0.97f
         synchronized(this) {
             if(p0?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
                 for(i in 0..2) {
